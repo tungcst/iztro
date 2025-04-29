@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { generateChart } from '../src/astro/generator';
+import { createZiWeiChart } from '../src/astro/core';
 import { Gender } from '../src/astro/types';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
@@ -14,13 +14,13 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const result = generateChart({
+    const chart = createZiWeiChart({
       birthday,
       birthtime,
       gender: gender === 'male' ? Gender.Male : Gender.Female,
     });
 
-    return res.status(200).json(result);
+    return res.status(200).json(chart);
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
