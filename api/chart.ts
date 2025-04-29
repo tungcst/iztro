@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { createZiWeiChart } from '../src/astro/core';
+import { createZiWeiChart } from '../src/star'; // ✅ 改正這行
 import { Gender } from '../src/astro/types';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
