@@ -1,26 +1,27 @@
-import { NowRequest, NowResponse } from '@vercel/node'
-import { generateChart } from '../src/astro/chart'
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import { generateChart } from '../src/astro/generator';
+import { Gender } from '../src/astro/types';
 
-export default async function handler(req: NowRequest, res: NowResponse) {
+export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Only POST is allowed' })
+    return res.status(405).json({ error: 'Only POST allowed' });
   }
 
-  const { birthday, birthtime, gender } = req.body
+  const { birthday, birthtime, gender } = req.body;
 
   if (!birthday || !birthtime || !gender) {
-    return res.status(400).json({ error: 'Missing required fields' })
+    return res.status(400).json({ error: 'Missing birthday, birthtime, or gender' });
   }
 
   try {
     const result = generateChart({
       birthday,
       birthtime,
-      gender
-    })
+      gender: gender === 'male' ? Gender.Male : Gender.Female,
+    });
 
-    return res.status(200).json(result)
-  } catch (e: any) {
-    return res.status(500).json({ error: e.message })
+    return res.status(200).json(result);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
   }
 }
