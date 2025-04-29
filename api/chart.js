@@ -1,7 +1,8 @@
-const { createZiWeiChart } = require('../src/star');
-const { Gender } = require('../src/astro/types');
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import { createZiWeiChart } from '../src/star';
+import { Gender } from '../src/astro/types';
 
-module.exports = (req, res) => {
+export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' });
   }
@@ -20,7 +21,7 @@ module.exports = (req, res) => {
     });
 
     return res.status(200).json(chart);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
-};
+}
