@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/chart.ts", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/chart", "dest": "api/chart.ts" }
+  ]
+}
